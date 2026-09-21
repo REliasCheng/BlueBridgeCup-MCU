@@ -1,0 +1,17 @@
+# Preserve original source line endings and bytes unless a GBK conversion is listed below.
+*.c -text
+*.h -text
+*.A51 -text
+*.uvproj -text
+
+# Preserve the original GBK working-tree bytes while storing readable UTF-8 blobs in Git.
+competition/national/16th-practice/library.c working-tree-encoding=GBK
+competition/national/16th-practice/main.c working-tree-encoding=GBK
+projects/ds18b20-demo/library.c working-tree-encoding=GBK
+projects/i2c-adc-demo/library.c working-tree-encoding=GBK
+projects/key-demo/library.c working-tree-encoding=GBK
+projects/led-demo/library.c working-tree-encoding=GBK
+projects/segment-display-demo/library.c working-tree-encoding=GBK
+projects/uart-demo/library.c working-tree-encoding=GBK
+projects/uart-demo/main.c working-tree-encoding=GBK
+projects/uart-demo/uart.c working-tree-encoding=GBK

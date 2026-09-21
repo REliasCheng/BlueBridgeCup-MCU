@@ -1,0 +1,22 @@
+# Keil build products
+**/Objects/
+**/Listings/
+*.obj
+*.lst
+*.hex
+*.map
+*.m51
+*.lnp
+*.plg
+*.bak
+*.tmp
+
+# Per-user Keil session/debug settings
+*.uvgui*
+*.uvopt
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
