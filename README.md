@@ -33,13 +33,15 @@
 
 V40 下载 IAP15 时，J9、J14 的设置要以板上丝印和硬件说明为准。具体外设引脚见 [CT107D 硬件分析](docs/CT107D硬件分析.md)。
 
-## 技术方向
+## 技术能力与代码证据
 
-- **基础控制**：GPIO、P0/P2 数据与锁存通道、LED、继电器。
-- **人机交互**：数码管动态扫描、独立按键读取与消抖；训练工程进一步使用矩阵按键和多界面状态。
-- **时间基础**：Timer2 中断提供扫描与任务计数节拍，Timer1 用于 UART 波特率。
-- **通信与外设**：UART 命令处理、软件 I²C / PCF8591 ADC、DS18B20 1-Wire、DS1302 RTC、AT24C02 参数保存。
-- **综合设计**：ADC/温度与输出联动；LED 模式、软件 PWM、EEPROM 和多页面任务组织。
+| 能力 | 工程中的实现与入口 |
+|---|---|
+| GPIO 与锁存控制 | [LED 工程](projects/led-demo/README.md)沿 P0 数据、P2 选通、74HC138/74HC573 到 LED 与继电器追踪输出；[硬件分析](docs/CT107D硬件分析.md)记录这条通路。 |
+| 定时器、中断与输入显示 | [数码管工程](projects/segment-display-demo/README.md)在 Timer2 中断中逐位扫描；[按键工程](projects/key-demo/README.md)用节拍确认按下并更新 LED 状态。 |
+| 串口通信 | [UART 工程](projects/uart-demo/README.md)用 Timer1 配波特率、中断接收命令，主循环处理后经 `putchar()` 查询 `TI` 发送。 |
+| 外设时序与数据处理 | [PCF8591 工程](projects/i2c-adc-demo/README.md)实现软件 I²C 与 ADC 换算；[DS18B20 工程](projects/ds18b20-demo/README.md)处理 1-Wire 命令与温度字节。 |
+| 多模块程序组织 | [省赛综合控制](competition/province/integrated-control/README.md)连接采样、按键、显示和输出；[LED 模式训练](competition/national/led-mode-training/README.md)加入 EEPROM、RTC 与软件 PWM；[多界面训练](competition/national/16th-practice/README.md)组织矩阵键、页面状态和任务节拍。 |
 
 ## 学习路线
 
@@ -88,6 +90,6 @@ IAP15 / STC15 兼容工程
 
 [调试记录](docs/调试记录.md)记录按键变量赋值、RTC 启动设时、ADC 换算和单总线转换等待等检查点，并区分代码检查与板端结果。[蓝桥杯竞赛体系](docs/蓝桥杯竞赛体系.md)展示如何将单模块工程组织成综合训练程序。
 
-## 后续计划
+## 后续方向
 
-接下来优先补板端照片、串口输出和测量对照记录，核查 I²C 接收与 DS18B20 转换时序；超声波与 PCA 测距待形成可复现工程后再加入。重复驱动确实需要跨项目维护时，再抽公共层。
+当前仓库的实现基于 C51 与 CT107D。接下来先补板端照片、串口输出和测量对照记录，核查 I²C 接收与 DS18B20 转换时序；超声波与 PCA 测距在形成可复现工程后再加入。之后把这里练过的驱动分层、定时任务和调试方法带到 STM32、RTOS 项目中，相关代码完成后再单独展示。
