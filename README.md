@@ -43,6 +43,6 @@ Control(0x80, value) 和 Control(0xC0, value) 先写 P0，再通过 P2 选择锁
 3. Build 后使用 STC-ISP 下载 HEX。
 4. 按项目 README 检查输入、显示和串口输出。
 
-部分中文注释原为 GBK，仓库通过 .gitattributes 保持 GitHub 页面可读。本地没有可用的 Keil C51 工具链，因此当前版本只核对了工程文件、源码接口和静态调用关系。
+部分中文注释原为 GBK，仓库通过 `.gitattributes` 保持 GitHub 页面可读。工程文件和调用关系已核对；Keil C51 构建与 CT107D 板端复测步骤见[调试记录](docs/调试记录.md)。
 
-综合工程中的固定 temp、level、vol、wt 属于界面和任务调度用的模拟数据，不代表板端采样。相关检查项记录在[调试记录](docs/调试记录.md)，课程与第三方资料说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+`16th-practice` 中的 `temp`、`level`、`vol`、`wt` 是界面与任务调度使用的固定输入。课程与第三方资料说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
