@@ -20,8 +20,6 @@
 | [LED 模式综合训练](competition/national/led-mode-training/README.md) | 四种流转模式、参数保存、亮度控制与串口报告 | AT24C02、ADC、软件 PWM、RTC、UART 和状态调度 |
 | [国赛方向模拟训练](competition/national/16th-practice/README.md) | 数据/参数/校准界面与 RTC 读取 | Timer2 统一节拍、矩阵键、状态与多任务组织 |
 
-竞赛目录记录训练工程，不以目录名称代表正式参赛作品或成绩。
-
 ## 平台环境
 
 | 项目 | 当前仓库使用情况 |
@@ -77,6 +75,9 @@ IAP15 / STC15 兼容工程
 ```
 
 `Control(0x80, value)`、`Control(0xC0, value)` 这样的调用背后是先写 P0，再用 P2 选锁存通道。数码管在中断里按“关位 → 写段 → 开位”刷新；显示机制需要结合中断而不只是 `main()` 来看。[CT107D 硬件分析](docs/CT107D硬件分析.md)把各项目中的端口、函数和外设对应起来。
+
+[CT107D 资源分配与竞赛工程结构](docs/CT107D资源分配与竞赛工程结构.md)进一步汇总 Timer0/1/2、UART、I²C、1-Wire、RTC 和 P3 复用关系，并说明基础驱动、综合训练与修正版 practice 的职责边界。
+
 
 ## 编译与运行
 
