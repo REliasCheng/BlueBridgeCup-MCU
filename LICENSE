@@ -1,5 +1,27 @@
-Copyright (c) 2026. All rights reserved.
+MIT License
 
-This public repository is a student learning and portfolio record. Viewing its contents does not grant permission to redistribute, modify, sublicense, or sell the code or documentation.
+Copyright (c) 2026 REliasCheng
 
-Any third-party components or notices retained in an exercise project remain subject to their original terms. This file does not claim ownership of, or grant rights to, third-party material.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the original code and documentation authored for this repository, to deal
+in those materials without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of those materials, and to permit persons to whom those materials
+are furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of those materials.
+
+This license covers repository-authored documentation and original practice
+code, including `practice/peripheral-driver-corrections/`. It does not grant
+rights to course or competition source code, Keil startup files, board
+materials, or other third-party content. Those materials remain subject to
+their original terms. See THIRD_PARTY_NOTICES.md.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
