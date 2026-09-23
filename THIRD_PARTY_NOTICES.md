@@ -4,4 +4,4 @@
 
 根目录 `LICENSE` 以 MIT 授权仓库作者编写的说明文档和 `practice/` 原创代码；它不替课程源码、竞赛训练原版、Keil 启动文件、芯片资料或其他第三方内容重新授权。复用具体训练代码或工具前，应核对对应原始来源的许可条款。
 
-`practice/peripheral-driver-corrections/`用于展示在保留原训练版本的前提下如何修正确定的代码路径；它不覆盖或改写原工程。
+`practice/peripheral-driver-corrections/`保存独立的驱动修正版，不覆盖或改写原训练工程。
