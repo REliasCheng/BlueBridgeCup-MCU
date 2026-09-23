@@ -1,4 +1,6 @@
 # Preserve original source line endings and bytes unless a GBK conversion is listed below.
+.gitattributes text eol=lf
+.gitignore text eol=lf
 *.c -text
 *.h -text
 *.A51 -text
@@ -19,3 +21,6 @@ projects/segment-display-demo/library.c working-tree-encoding=GBK
 projects/uart-demo/library.c working-tree-encoding=GBK
 projects/uart-demo/main.c working-tree-encoding=GBK
 projects/uart-demo/uart.c working-tree-encoding=GBK
+practice/**/*.c text eol=lf
+practice/**/*.h text eol=lf
+*.md text eol=lf

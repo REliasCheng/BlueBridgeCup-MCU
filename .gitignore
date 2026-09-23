@@ -20,3 +20,11 @@
 Thumbs.db
 *.swp
 *.swo
+__pycache__/
+*.pyc
+build/
+out/
+*.zip
+*.rar
+*.7z
+*.exe

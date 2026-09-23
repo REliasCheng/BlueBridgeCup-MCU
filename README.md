@@ -4,7 +4,7 @@
 
 这是我的蓝桥杯单片机竞赛训练与嵌入式学习记录。基于 CT107D、IAP15/STC15 兼容目标和 C51，从锁存控制、显示与按键，推进到通信、传感器驱动，再把采样、参数保存和任务调度放进综合工程。源码保留训练时的写法，项目页说明硬件关系、程序结构和代码检查中发现的问题。
 
-目前有 **9 个独立的 Keil C51 工程**：6 个基础/驱动工程、1 个省赛综合控制工程，以及 2 个国赛方向训练工程。每个工程保留源码、工程文件和对应说明。
+目前有 **9 个独立的 Keil C51 工程**：6 个基础/驱动工程、1 个省赛综合控制工程，以及 2 个国赛方向训练工程。每个工程保留源码、工程文件和对应说明；另有一组[外设驱动修正版实践](practice/peripheral-driver-corrections/README.md)，用于对比I²C、1-Wire、按键、RTC和UART接口的改进方式。
 
 ## 项目列表
 
@@ -42,6 +42,7 @@ V40 下载 IAP15 时，J9、J14 的设置要以板上丝印和硬件说明为准
 | 串口通信 | [UART 工程](projects/uart-demo/README.md)用 Timer1 配波特率、中断接收命令，主循环处理后经 `putchar()` 查询 `TI` 发送。 |
 | 外设时序与数据处理 | [PCF8591 工程](projects/i2c-adc-demo/README.md)实现软件 I²C 与 ADC 换算；[DS18B20 工程](projects/ds18b20-demo/README.md)处理 1-Wire 命令与温度字节。 |
 | 多模块程序组织 | [省赛综合控制](competition/province/integrated-control/README.md)连接采样、按键、显示和输出；[LED 模式训练](competition/national/led-mode-training/README.md)加入 EEPROM、RTC 与软件 PWM；[多界面训练](competition/national/16th-practice/README.md)组织矩阵键、页面状态和任务节拍。 |
+| 驱动检查与修正 | [practice修正版](practice/peripheral-driver-corrections/README.md)将ACK结果、温度转换阶段、RTC启动策略和UART ISR职责写入独立接口，原训练源码保持可对照。 |
 
 ## 学习路线
 
@@ -84,12 +85,18 @@ IAP15 / STC15 兼容工程
 3. Build 后用 STC-ISP 下载生成的 HEX，按项目 README 的输入和预期输出逐项观察。
 4. 将板端现象、照片或串口输出记录到对应项目，并在 [调试记录](docs/调试记录.md)中关联问题和修改提交。
 
-仓库保留各工程的 C 源码和 Keil 相对路径；部分中文注释原为 GBK 编码，`.gitattributes` 负责 GitHub 页面上的文本显示。构建记录与板端表现分开记录，不能仅凭编译结果推断外设测量精度。
+仓库保留各工程的 C 源码和 Keil 相对路径；部分中文注释原为 GBK 编码，`.gitattributes` 负责 GitHub 页面上的文本显示。外设测量以板端记录为准，代码结构、编译结果和实际采样分别留证。
 
 ## 调试与竞赛训练
 
 [调试记录](docs/调试记录.md)记录按键变量赋值、RTC 启动设时、ADC 换算和单总线转换等待等检查点，并区分代码检查与板端结果。[蓝桥杯竞赛体系](docs/蓝桥杯竞赛体系.md)展示如何将单模块工程组织成综合训练程序。
 
+课程与第三方内容的许可边界集中见[来源与许可说明](THIRD_PARTY_NOTICES.md)。
+
 ## 后续方向
 
 当前仓库的实现基于 C51 与 CT107D。接下来先补板端照片、串口输出和测量对照记录，核查 I²C 接收与 DS18B20 转换时序；超声波与 PCA 测距在形成可复现工程后再加入。之后把这里练过的驱动分层、定时任务和调试方法带到 STM32、RTOS 项目中，相关代码完成后再单独展示。
+
+## 技术路线中的位置
+
+[Embedded-Systems-Foundations](https://github.com/REliasCheng/Embedded-Systems-Foundations) → [Embedded-C-Cpp-Learning](https://github.com/REliasCheng/Embedded-C-Cpp-Learning) → [stc89c52-learning](https://github.com/REliasCheng/stc89c52-learning) → **BlueBridgeCup-MCU**
