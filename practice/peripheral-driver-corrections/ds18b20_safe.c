@@ -1,4 +1,5 @@
 #include "ds18b20_safe.h"
+#include "peripheral_policy.h"
 
 sbit SAFE_DQ = P1^4;
 
@@ -59,6 +60,11 @@ void DS18B20_StartConversion(void)
         DS18B20_WriteByte(0xCC);
         DS18B20_WriteByte(0x44);
     }
+}
+
+bit DS18B20_ConversionReady(uint elapsed_ms)
+{
+    return PeripheralPolicy_Ds18b20Ready(elapsed_ms) != 0;
 }
 
 float DS18B20_ReadTemperature(void)

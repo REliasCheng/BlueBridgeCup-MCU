@@ -33,6 +33,24 @@ I²C API把“总线动作成功”与“ADC数值”分开返回，避免把NAC
 
 `uart_safe.c`选择“TI由ISR统一处理”：发送函数等待`tx_done`，不再与ISR同时清`TI`。RX ISR只做字节入队，帧边界和命令解释留给主循环。固定32字节队列满时设置溢出标志，调用方可以丢弃当前帧并重新同步。
 
+## 主机逻辑测试
+
+`peripheral_policy.c`保存不依赖寄存器的判断逻辑，C51 修正版与主机测试共用同一实现：
+
+- RTC 时、分、秒的 BCD 范围检查；
+- 按键扫描周期和值域检查；
+- DS18B20 750 ms 转换完成条件；
+- UART 环形队列索引回绕。
+
+```powershell
+gcc -std=c11 -Wall -Wextra -Werror -pedantic `
+  peripheral_policy.c tests/test_peripheral_policy.c `
+  -I . -o peripheral-policy-test.exe
+./peripheral-policy-test.exe
+```
+
+该测试覆盖可移植策略，不替代 I²C、1-Wire 和 UART 的板端时序复测。
+
 ## 板端复测
 
 修正版需要在 Keil C51 和 CT107D 上依次检查：

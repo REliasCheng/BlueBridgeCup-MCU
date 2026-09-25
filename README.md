@@ -18,7 +18,7 @@
 | [LED 模式综合训练](competition/national/led-mode-training/README.md) | AT24C02、ADC、软件 PWM、RTC、UART 和四种灯效 |
 | [国赛方向模拟训练](competition/national/16th-practice/README.md) | 矩阵键、RTC、多页面和 Timer2 任务节拍 |
 
-[外设驱动修正版](practice/peripheral-driver-corrections/README.md)单独实现 I²C、DS18B20、按键、RTC 和 UART 的改进接口，便于和训练源码逐项对照。
+[外设驱动修正版](practice/peripheral-driver-corrections/README.md)单独实现 I²C、DS18B20、按键、RTC 和 UART 的改进接口，并为不依赖寄存器的策略提供主机断言测试。
 
 ## Architecture
 

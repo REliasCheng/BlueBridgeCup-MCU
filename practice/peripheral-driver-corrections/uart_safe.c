@@ -1,4 +1,5 @@
 #include "uart_safe.h"
+#include "peripheral_policy.h"
 
 #define UART_RX_CAPACITY 32
 
@@ -42,7 +43,7 @@ bit UartSafe_ReadByte(uchar *value)
     previous_es = ES;
     ES = 0;
     *value = rx_buffer[rx_tail];
-    rx_tail = (rx_tail + 1) % UART_RX_CAPACITY;
+    rx_tail = PeripheralPolicy_RingNext(rx_tail, UART_RX_CAPACITY);
     ES = previous_es;
     return 1;
 }
@@ -64,7 +65,7 @@ void UartSafe_ISR(void) interrupt 4
         uchar next;
         uchar value = SBUF;
         RI = 0;
-        next = (rx_head + 1) % UART_RX_CAPACITY;
+        next = PeripheralPolicy_RingNext(rx_head, UART_RX_CAPACITY);
         if(next == rx_tail) {
             rx_overflow = 1;
         } else {

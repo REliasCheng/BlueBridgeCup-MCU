@@ -1,12 +1,6 @@
 #include "rtc_startup.h"
+#include "peripheral_policy.h"
 #include <ds1302.h>
-
-static bit valid_bcd(uchar value, uchar max_decimal)
-{
-    uchar high = (value >> 4) & 0x0f;
-    uchar low = value & 0x0f;
-    return low <= 9 && high <= 9 && (high * 10 + low) <= max_decimal;
-}
 
 bit RTC_HasValidTime(void)
 {
@@ -16,7 +10,9 @@ bit RTC_HasValidTime(void)
     if(second & 0x80) {
         return 0;
     }
-    return valid_bcd(second & 0x7f, 59) && valid_bcd(minute, 59) && valid_bcd(hour, 23);
+    return PeripheralPolicy_IsValidBcd(second & 0x7f, 59) &&
+           PeripheralPolicy_IsValidBcd(minute, 59) &&
+           PeripheralPolicy_IsValidBcd(hour, 23);
 }
 
 bit RTC_InitIfInvalid(uchar default_hour, uchar default_minute, uchar default_second)
