@@ -43,7 +43,7 @@ Timer2_Service（中断 12）
 | `main.c` | 四种模式、界面状态、按键、任务计数、LED PWM 和串口报告 |
 | `iic.c/.h` | 软件 I²C、`Read_Adc()`、`Read_Eeprom()`、`Write_Eeprom()` |
 | `ds1302.c/.h` | 三线读写与 RTC 设时 |
-| `uart.c/.h` | Timer1 波特率配置和查询式发送；此工程没有串口接收命令流程 |
+| `uart.c/.h` | Timer1 波特率配置和查询式发送 |
 | `library.c/.h` | Timer2 初始化和锁存操作 |
 | `5.uvproj`、`STARTUP.A51` | Keil C51 工程与启动文件 |
 
