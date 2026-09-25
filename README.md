@@ -22,6 +22,10 @@
 
 ## Architecture
 
+![CT107D 共享数据总线与锁存通道](assets/images/architecture/ct107d-latch-routing.svg)
+
+P0 提供 8 位共享数据，P2.5–P2.7 经 74HC138 选择目标 74HC573；通道值与现有 `Control(channel, value)` 调用一致。
+
 - 开发板资料覆盖 V3.1 与 V4.0。
 - 板载 MCU 为 IAP15F2K61S2；Keil 工程选用 STC15F2K60S2 Series 兼容目标。
 - 多数工程按 12 MHz 配置，使用 Keil C51 / µVision 构建并由 STC-ISP 下载。
