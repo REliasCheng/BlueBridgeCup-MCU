@@ -1,10 +1,12 @@
 # BlueBridgeCup-MCU
 
-## Overview
+## 👋 项目简介 | Overview
 
 基于 CT107D 与 IAP15/STC15 兼容目标的蓝桥杯单片机训练工程。仓库包含 9 个 Keil C51 项目，从 P0/P2 锁存控制、数码管和按键扩展到 UART、PCF8591、DS18B20、参数保存与多任务综合程序。
 
-## Technical Highlights
+![CT107D 共享数据总线与锁存通道](assets/images/architecture/ct107d-latch-routing.svg)
+
+## 🚀 核心项目 | Featured Projects
 
 | 项目 | 实现 |
 | --- | --- |
@@ -20,9 +22,7 @@
 
 [外设驱动修正版](practice/peripheral-driver-corrections/README.md)单独实现 I²C、DS18B20、按键、RTC 和 UART 的改进接口，并为不依赖寄存器的策略提供主机断言测试。
 
-## Architecture
-
-![CT107D 共享数据总线与锁存通道](assets/images/architecture/ct107d-latch-routing.svg)
+## 🧠 系统架构 | Architecture
 
 P0 提供 8 位共享数据，P2.5–P2.7 经 74HC138 选择目标 74HC573；通道值与现有 `Control(channel, value)` 调用一致。
 
@@ -42,7 +42,7 @@ Control(0x80, value) 和 Control(0xC0, value) 先写 P0，再通过 P2 选择锁
 
 端口、外设和板卡版本见 [CT107D 硬件分析](docs/CT107D硬件分析.md)；Timer、UART、I²C、1-Wire 与 P3 复用见[资源分配与工程结构](docs/CT107D资源分配与竞赛工程结构.md)。
 
-## Project Structure
+## 📂 工程结构 | Repository Structure
 
 ```text
 projects/      单外设与基础驱动工程
@@ -52,7 +52,7 @@ docs/          CT107D 硬件、资源分配和调试记录
 assets/images/ 实机照片、串口输出和波形入口
 ```
 
-## Build / Run
+## 🛠 构建与下载 | Build / Run
 
 1. 进入项目目录，用 Keil C51 打开同目录的 .uvproj。
 2. 核对 MCU 兼容目标、12 MHz 配置、板卡版本和拨码/跳线。
@@ -63,14 +63,14 @@ assets/images/ 实机照片、串口输出和波形入口
 
 `16th-practice` 中的 `temp`、`level`、`vol`、`wt` 是界面与任务调度使用的固定输入。来源与许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
-## Documentation
+## 📖 技术文档 | Documentation
 
 - [CT107D 硬件分析](docs/CT107D硬件分析.md)
 - [资源分配与竞赛工程结构](docs/CT107D资源分配与竞赛工程结构.md)
 - [竞赛工程路线](docs/蓝桥杯竞赛体系.md)
 - [调试记录](docs/调试记录.md)
 
-## Related Projects
+## 🔗 相关项目 | Related Projects
 
 - [stc89c52-learning](https://github.com/REliasCheng/stc89c52-learning)：STC89C52RC 外设驱动与分层结构。
 - [STC8-MCU-Learning](https://github.com/REliasCheng/STC8-MCU-Learning)：STC8 外设、通信与任务协作。
