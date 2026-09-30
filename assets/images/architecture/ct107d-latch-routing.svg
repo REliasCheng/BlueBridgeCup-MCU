@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">CT107D shared bus and latch routing</title>
+  <desc id="desc">IAP15F2K61S2 P0 supplies data while P2.5 through P2.7 select one of four 74HC573 latch channels through a 74HC138 decoder.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 24px "Segoe UI", "Microsoft YaHei", sans-serif; fill: #0f172a; }
+      .label { font: 600 17px "Segoe UI", "Microsoft YaHei", sans-serif; fill: #0f172a; }
+      .small { font: 14px "Segoe UI", "Microsoft YaHei", sans-serif; fill: #334155; }
+      .box { stroke-width: 2; rx: 12; ry: 12; }
+      .wire { fill: none; stroke: #475569; stroke-width: 3; marker-end: url(#arrow); }
+      .select { fill: none; stroke: #7c3aed; stroke-width: 3; marker-end: url(#arrow); }
+      .data { fill: none; stroke: #0284c7; stroke-width: 3; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="520" fill="#f8fafc"/>
+  <text x="600" y="42" text-anchor="middle" class="title">CT107D 共享数据总线与锁存通道</text>
+
+  <rect x="40" y="185" width="230" height="130" class="box" fill="#e0f2fe" stroke="#0284c7"/>
+  <text x="155" y="225" text-anchor="middle" class="label">IAP15F2K61S2</text>
+  <text x="155" y="258" text-anchor="middle" class="small">P0：8-bit data</text>
+  <text x="155" y="286" text-anchor="middle" class="small">P2.5-P2.7：channel select</text>
+
+  <rect x="350" y="85" width="210" height="100" class="box" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="455" y="125" text-anchor="middle" class="label">74HC138</text>
+  <text x="455" y="153" text-anchor="middle" class="small">3-to-8 decoder</text>
+
+  <path d="M270 220 C315 220 310 135 350 135" class="select"/>
+  <text x="292" y="150" class="small" fill="#7c3aed">P2 select</text>
+
+  <path d="M270 275 H635" class="data"/>
+  <text x="400" y="263" class="small" fill="#0284c7">P0 shared data</text>
+
+  <path d="M560 135 H610 V105 H650" class="select"/>
+  <path d="M560 135 H610 V205 H650" class="select"/>
+  <path d="M560 135 H610 V305 H650" class="select"/>
+  <path d="M560 135 H610 V405 H650" class="select"/>
+
+  <path d="M635 275 V105 H650" class="data"/>
+  <path d="M635 275 V205 H650" class="data"/>
+  <path d="M635 275 V305 H650" class="data"/>
+  <path d="M635 275 V405 H650" class="data"/>
+
+  <g>
+    <rect x="650" y="65" width="230" height="80" class="box" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="765" y="95" text-anchor="middle" class="label">0x80 · 74HC573</text>
+    <text x="765" y="123" text-anchor="middle" class="small">LED output (active low)</text>
+
+    <rect x="650" y="165" width="230" height="80" class="box" fill="#fef3c7" stroke="#d97706"/>
+    <text x="765" y="195" text-anchor="middle" class="label">0xA0 · 74HC573</text>
+    <text x="765" y="223" text-anchor="middle" class="small">ULN2003 · buzzer / relay</text>
+
+    <rect x="650" y="265" width="230" height="80" class="box" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="765" y="295" text-anchor="middle" class="label">0xC0 · 74HC573</text>
+    <text x="765" y="323" text-anchor="middle" class="small">seven-segment digit select</text>
+
+    <rect x="650" y="365" width="230" height="80" class="box" fill="#f3e8ff" stroke="#9333ea"/>
+    <text x="765" y="395" text-anchor="middle" class="label">0xE0 · 74HC573</text>
+    <text x="765" y="423" text-anchor="middle" class="small">seven-segment code</text>
+  </g>
+
+  <path d="M880 105 H1050" class="wire"/>
+  <path d="M880 205 H1050" class="wire"/>
+  <path d="M880 305 H1050" class="wire"/>
+  <path d="M880 405 H1050" class="wire"/>
+
+  <text x="1100" y="110" text-anchor="middle" class="small">LED</text>
+  <text x="1100" y="210" text-anchor="middle" class="small">Buzzer / Relay</text>
+  <text x="1100" y="310" text-anchor="middle" class="small">Digit select</text>
+  <text x="1100" y="410" text-anchor="middle" class="small">Segment output</text>
+
+  <text x="600" y="490" text-anchor="middle" class="small">Control(channel, value): write P0 data → select latch with P2 → release P2</text>
+</svg>
