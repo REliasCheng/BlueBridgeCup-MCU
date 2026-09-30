@@ -8,7 +8,7 @@
 
 - 保留独立源码文件：13 个；范围以当前 candidate tree 为准。
 - 课程源码、课程图片、PDF、未知字体、未知生成资产和不必要的第三方/vendor 大包均不在本快照中。
-- $(System.Collections.Hashtable.Limitation)
+- 训练与竞赛原始工程未进入该快照，公开比赛题目不被视为源码再分发许可。
 
 ## Contents
 
@@ -19,7 +19,7 @@
 ## Validation boundary
 
 - 未提供板端运行证据时，不声称 hardware verified。
-- 未执行真实构建时，不声称 build verified。
+- 本轮对保留的 host-testable 核心运行了 GCC 16.1.0 编译和测试；未验证 Keil/板端构建或硬件运行。
 - 文档中的协议、地址、寄存器和架构关系属于技术事实说明，不表示未知来源的具体实现已被保留。
 
 ## License scope
