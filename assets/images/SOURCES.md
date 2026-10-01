@@ -1,7 +1,5 @@
-# Retained image sources
+# Image Sources
 
-All SVG files below are classified by the authoritative inventory as repository-authored (`ORIGINAL_SVG`, `CLEAR`):
+`architecture/ct107d-latch-routing.svg` 由仓库维护者根据当前文档中的 CT107D 共享总线与锁存关系自行绘制，用于说明 P0 数据、P2 通道选择以及 LED、蜂鸣器/继电器、数码管位选和段选之间的连接。
 
-- $((Normalize-Path @{REPOSITORY=BlueBridgeCup-MCU; FILE_OR_COMPONENT=ct107d-latch-routing.svg; PATH=assets/images/architecture/ct107d-latch-routing.svg; CATEGORY=ORIGINAL_SVG; UPSTREAM_PROJECT=Repository-authored technical diagram; UPSTREAM_URL=; COPYRIGHT_NOTICE_PRESENT=NO; COPYRIGHT_HOLDER=REliasCheng / repository maintainer; LICENSE_ID=MIT; LICENSE_SOURCE=Repository root LICENSE; LICENSE_FILE_PRESENT=YES; REDISTRIBUTION_ESTABLISHED=YES; MODIFICATION_ALLOWED=YES; NOTICE_REQUIRED=YES; NOTICE_PRESENT=YES; SOURCE_DISCLOSURE_REQUIREMENT=NO; GENERATED_FROM=Repository facts and technical relationships; PUBLIC_STATUS=TRACKED; RISK_LEVEL=CLEAR; ACTION=NONE; NOTES=Repository-authored SVG; no embedded remote resource detected.}.PATH)) — SELF_AUTHORED
-
-No raster image, third-party image, unknown font, or generated UI asset is bundled in this candidate.
+SVG 不嵌入外部图片、远程资源或第三方字体，适用根目录 [MIT License](../../LICENSE)。
