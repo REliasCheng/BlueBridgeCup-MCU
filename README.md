@@ -69,7 +69,7 @@ assets/images/            自绘板级架构图
 
 ### Hardware Validation
 
-Not performed。当前公开验证不包含 Keil 目标构建、板端下载、逻辑分析仪波形或传感器实测。
+**Status:** Not Performed. 当前公开验证不包含 Keil 目标构建、板端下载、逻辑分析仪波形或传感器实测。
 
 ### Runtime Evidence
 
