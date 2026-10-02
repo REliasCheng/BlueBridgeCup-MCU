@@ -2,11 +2,9 @@
 
 面向蓝桥杯单片机方向的 CT107D 板级资源分析与外设可靠性实践。
 
-## Overview
+![CT107D board-control path](assets/images/architecture/portfolio-overview.svg)
 
-仓库重点展示共享总线、锁存器、定时节拍和通信接口如何进入综合控制程序，并用可在主机端验证的策略层处理常见边界问题。
-
-## Platform & Technology
+## Project Snapshot
 
 | Field | Value |
 | --- | --- |
@@ -15,6 +13,12 @@
 | Toolchain | Keil C51 开发语境；GCC 16.1.0 主机验证 |
 | Architecture | P0 共享数据通路、P2/74HC138/74HC573 锁存选择、Timer2 周期节拍 |
 | Verification | `peripheral_policy.c` 的主机测试；不包含硬件验证 |
+
+> **Project status:** Architecture documented · Host Test passed · GCC host build passed · Keil target build and hardware validation not performed
+
+## Overview
+
+仓库重点展示共享总线、锁存器、定时节拍和通信接口如何进入综合控制程序，并用可在主机端验证的策略层处理常见边界问题。
 
 外设范围包括 74HC138/74HC573、LED、数码管、独立键/矩阵键、UART、PCF8591、AT24C02、DS18B20 与 DS1302。
 
