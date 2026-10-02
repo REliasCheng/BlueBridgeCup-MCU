@@ -2,19 +2,21 @@
 
 面向蓝桥杯单片机方向的 CT107D 板级资源分析与外设可靠性实践。
 
+**🔌 CT107D Shared Resources**
+
 ![CT107D board-control path](assets/images/architecture/portfolio-overview.svg)
 
-## Project Snapshot
+## Board Snapshot
 
-| Field | Value |
+| Board Focus | Current Scope |
 | --- | --- |
-| Language | Embedded C、C11 |
-| Platform | CT107D V31/V40、IAP15F2K61S2；Keil 目标使用 STC15F2K60S2 Series 兼容配置 |
-| Toolchain | Keil C51 开发语境；GCC 16.1.0 主机验证 |
-| Architecture | P0 共享数据通路、P2/74HC138/74HC573 锁存选择、Timer2 周期节拍 |
-| Verification | `peripheral_policy.c` 的主机测试；不包含硬件验证 |
+| MCU / Board | CT107D V31/V40、IAP15F2K61S2；Keil 使用兼容器件配置 |
+| Shared Resources | P0 数据总线、P2 / 74HC138 / 74HC573 锁存选择 |
+| Timing & Interfaces | Timer2 周期节拍、UART、I²C、1-Wire、RTC |
+| Host Evidence | `peripheral_policy.c` 使用 GCC 16.1.0 验证 |
+| Hardware Scope | Keil 目标构建与 CT107D 实机验证未执行 |
 
-> **Project status:** Architecture documented · Host Test passed · GCC host build passed · Keil target build and hardware validation not performed
+> ⏱️ **Evidence:** Peripheral policies host-tested · GCC build passed · Keil target and hardware validation not performed
 
 ## Overview
 
@@ -23,6 +25,8 @@
 外设范围包括 74HC138/74HC573、LED、数码管、独立键/矩阵键、UART、PCF8591、AT24C02、DS18B20 与 DS1302。
 
 ## Architecture
+
+### Timing and Shared Bus
 
 ![CT107D 锁存与共享总线](assets/images/architecture/ct107d-latch-routing.svg)
 
