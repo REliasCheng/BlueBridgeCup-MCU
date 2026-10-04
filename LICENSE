@@ -3,8 +3,8 @@ MIT License
 Copyright (c) 2026 REliasCheng
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of the original documentation, diagrams, and code authored for this clean
-public candidate (the "Software"), to deal in the Software without
+of the original documentation, diagrams, and code authored for this
+repository (the "Software"), to deal in the Software without
 restriction, including without limitation the rights to use, copy, modify,
 merge, publish, distribute, sublicense, and/or sell copies of the Software,
 and to permit persons to whom the Software is furnished to do so, subject to
@@ -15,7 +15,7 @@ copies or substantial portions of the Software.
 
 This license does not apply to third-party or vendor components merely named,
 described, or linked from the documentation. No rights are granted for course
-materials or for files not included in this candidate.
+materials or for files not included in this repository.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
