@@ -3,9 +3,10 @@
 
 #include <library.h>
 
-void DS18B20_StartConversion(void);
+bit DS18B20_StartConversion(void);
 bit DS18B20_ConversionReady(uint elapsed_ms);
-float DS18B20_ReadTemperature(void);
-float DS18B20_ReadTemperatureBlocking(void);
+/* Call only after a successful start and at least 750 ms of externally
+ * measured elapsed time. On reset/CRC failure, output is unchanged. */
+bit DS18B20_ReadTemperature(uint elapsed_ms, float *temperature_c);
 
 #endif

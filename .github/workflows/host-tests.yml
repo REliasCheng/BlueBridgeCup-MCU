@@ -1,0 +1,44 @@
+name: BlueBridge portable host tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Build and run portable policy tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir=practice/peripheral-driver-corrections
+          "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -I "$dir" \
+            "$dir/peripheral_policy.c" "$dir/tests/test_peripheral_policy.c" -o /tmp/bluebridge-policy
+          /tmp/bluebridge-policy
+          "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -I "$dir" \
+            "$dir/peripheral_policy.c" "$dir/tests/test_pcf8591_transaction.c" -o /tmp/bluebridge-pcf
+          /tmp/bluebridge-pcf
+          "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -DHOST_TEST \
+            -I "$dir/tests/stubs" -I "$dir" \
+            "$dir/uart_safe.c" "$dir/peripheral_policy.c" "$dir/tests/test_uart_safe.c" \
+            -o /tmp/bluebridge-uart
+          /tmp/bluebridge-uart
+          "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -DHOST_TEST \
+            -I "$dir/tests/stubs" -I "$dir" -fsyntax-only \
+            "$dir/iic_safe.c" "$dir/ds18b20_safe.c"
+        env:
+          CC: ${{ matrix.compiler }}
