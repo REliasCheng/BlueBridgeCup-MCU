@@ -8,6 +8,11 @@ static volatile uchar rx_head;
 static volatile uchar rx_tail;
 static volatile bit rx_overflow;
 static volatile bit tx_done;
+static volatile bit tx_busy;
+
+#ifdef HOST_TEST
+extern void UartSafe_TestPollHook(void);
+#endif
 
 void UartSafe_Init(void)
 {
@@ -23,15 +28,38 @@ void UartSafe_Init(void)
     rx_tail = 0;
     rx_overflow = 0;
     tx_done = 0;
+    tx_busy = 0;
     ES = 1;
     EA = 1;
 }
 
-void UartSafe_SendByte(uchar value)
+uchar UartSafe_SendByte(uchar value, uint poll_budget)
 {
+    uint poll;
+    bit previous_es;
+    if(EA == 0 || ES == 0) {
+        return UART_SAFE_TX_INTERRUPTS_DISABLED;
+    }
+    previous_es = ES;
+    ES = 0;
+    if(tx_busy) {
+        ES = previous_es;
+        return UART_SAFE_TX_BUSY;
+    }
     tx_done = 0;
+    tx_busy = 1;
+    TI = 0;
     SBUF = value;
-    while(!tx_done);
+    ES = previous_es;
+    for(poll = 0; poll < poll_budget; ++poll) {
+#ifdef HOST_TEST
+        UartSafe_TestPollHook();
+#endif
+        if(tx_done) {
+            return UART_SAFE_TX_OK;
+        }
+    }
+    return tx_done ? UART_SAFE_TX_OK : UART_SAFE_TX_TIMEOUT;
 }
 
 bit UartSafe_ReadByte(uchar *value)
@@ -59,7 +87,11 @@ bit UartSafe_TakeOverflow(void)
     return value;
 }
 
+#ifdef HOST_TEST
+void UartSafe_ISR(void)
+#else
 void UartSafe_ISR(void) interrupt 4
+#endif
 {
     if(RI) {
         uchar next;
@@ -76,5 +108,6 @@ void UartSafe_ISR(void) interrupt 4
     if(TI) {
         TI = 0;
         tx_done = 1;
+        tx_busy = 0;
     }
 }

@@ -1,7 +1,12 @@
 #include "ds18b20_safe.h"
 #include "peripheral_policy.h"
 
+#ifdef HOST_TEST
+extern volatile uchar SAFE_DQ;
+#else
 sbit SAFE_DQ = P1^4;
+#endif
+static bit conversion_started;
 
 static void DS18B20_Delay(uint count)
 {
@@ -54,38 +59,38 @@ static uchar DS18B20_ReadByte(void)
     return value;
 }
 
-void DS18B20_StartConversion(void)
+bit DS18B20_StartConversion(void)
 {
-    if(DS18B20_Reset()) {
-        DS18B20_WriteByte(0xCC);
-        DS18B20_WriteByte(0x44);
+    if(!DS18B20_Reset()) {
+        conversion_started = 0;
+        return 0;
     }
+    DS18B20_WriteByte(0xCC);
+    DS18B20_WriteByte(0x44);
+    conversion_started = 1;
+    return 1;
 }
 
 bit DS18B20_ConversionReady(uint elapsed_ms)
 {
-    return PeripheralPolicy_Ds18b20Ready(elapsed_ms) != 0;
+    return conversion_started && PeripheralPolicy_Ds18b20Ready(elapsed_ms) != 0;
 }
 
-float DS18B20_ReadTemperature(void)
+bit DS18B20_ReadTemperature(uint elapsed_ms, float *temperature_c)
 {
-    uchar low;
-    uchar high;
-    int raw;
+    uchar scratchpad[9];
+    uchar index;
+    if(temperature_c == 0 || !DS18B20_ConversionReady(elapsed_ms)) {
+        return 0;
+    }
+    conversion_started = 0;
     if(!DS18B20_Reset()) {
-        return 0.0f;
+        return 0;
     }
     DS18B20_WriteByte(0xCC);
     DS18B20_WriteByte(0xBE);
-    low = DS18B20_ReadByte();
-    high = DS18B20_ReadByte();
-    raw = (int)(((uint)high << 8) | low);
-    return raw * 0.0625f;
-}
-
-float DS18B20_ReadTemperatureBlocking(void)
-{
-    DS18B20_StartConversion();
-    DS18B20_Delay(62500U);
-    return DS18B20_ReadTemperature();
+    for(index = 0U; index < 9U; ++index) {
+        scratchpad[index] = DS18B20_ReadByte();
+    }
+    return PeripheralPolicy_Ds18b20Decode(scratchpad, temperature_c) != 0U;
 }

@@ -13,7 +13,7 @@
 | MCU / Board | CT107D V31/V40、IAP15F2K61S2；Keil 使用兼容器件配置 |
 | Shared Resources | P0 数据总线、P2 / 74HC138 / 74HC573 锁存选择 |
 | Timing & Interfaces | Timer2 周期节拍、UART、I²C、1-Wire、RTC |
-| Host Evidence | `peripheral_policy.c` 使用 GCC 16.1.0 验证 |
+| Host Evidence | Portable policy and UART state tests use GCC/Clang in CI; no C51 target result |
 | Hardware Scope | Keil 目标构建与 CT107D 实机验证未执行 |
 
 > ⏱️ **Evidence:** Peripheral policies host-tested · GCC build passed · Keil target and hardware validation not performed
@@ -37,9 +37,9 @@ P0 是共享的 8 位数据通路，P2.5-P2.7 通过 74HC138 选择 74HC573 锁�
 | 模块 | 当前仓库中的工程价值 |
 | --- | --- |
 | 板级资源表 | 说明 P0/P2 锁存通路、P3/UART 复用与定时器分工 |
-| I²C 策略 | 显式处理 ACK/NACK、接收初值和错误返回 |
-| DS18B20 策略 | 分离启动转换与读取，明确最长 750 ms 等待条件 |
-| UART 策略 | RX 中断只入队，主循环解析；TX 完成职责保持单一 |
+| I²C 策略 | 丢弃 PCF8591 前次转换字节；区分 NACK、总线占用和 STOP 失败 |
+| DS18B20 策略 | 启动与读取分离，外部等待至少 750 ms；CRC 与温度状态分开 |
+| UART 策略 | RX 中断入队；TX 有界等待且超时不盲目重发 |
 | RTC 启动策略 | 检查 CH 位与 BCD 范围，仅在数据无效时写默认值 |
 | 按键与资源策略 | 约束扫描周期、键值范围和共享引脚使用 |
 
@@ -53,6 +53,8 @@ practice/peripheral-driver-corrections/
   rtc_startup.*           RTC 有效性与启动策略
   key_task_safe.*         周期扫描与键值处理
   peripheral_policy.*     可移植策略与主机测试
+  tests/                  GCC/Clang 主机边界测试
+.github/workflows/host-tests.yml  PR 与 main 的主机 CI
 docs/                     CT107D、竞赛结构与调试记录
 assets/images/            自绘板级架构图
 ```
@@ -69,11 +71,11 @@ assets/images/            自绘板级架构图
 
 ### 💻 Host Test
 
-`peripheral_policy.c` 的主机测试覆盖 RTC BCD 合法性、按键扫描条件、DS18B20 转换等待和 UART 环形队列回绕，当前均通过。
+主机测试覆盖 RTC BCD、按键条件、DS18B20 转换/CRC/温度解码、UART 队列及有界 TX 状态、PCF8591 事务顺序和失败路径。测试使用模拟寄存器/总线回调，不验证板端电气时序。
 
 ### 🔨 Build Verification
 
-可移植策略层已使用 GCC 16.1.0 和严格警告选项完成主机构建。
+可移植策略层和 UART Host shim 已使用 GCC 与严格警告选项完成本地构建；PR 的 GCC/Clang CI 结果需按实际运行 SHA 核验。Keil C51 Target Build 尚未执行。
 
 ### 🔌 Hardware Validation
 
