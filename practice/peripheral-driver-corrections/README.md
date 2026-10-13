@@ -33,7 +33,7 @@ PCF8591 单端通道仅接受 0–3。按 [NXP PCF8591 数据手册](https://www
 
 `uart_safe.c` 选择“TI 由 ISR 统一处理”：`UartSafe_SendByte(value, poll_budget)` 返回 `OK`、`BUSY`、`TIMEOUT` 或 `INTERRUPTS_DISABLED`。`poll_budget` 是有界迭代次数，不是校准毫秒。TIMEOUT 表示完成状态未知，不能盲目重发；迟到的 TI 中断可释放忙碌状态，否则需要诊断后重新初始化。RX ISR 只做字节入队，帧边界和命令解释留给主循环。固定 32 字节队列满时设置溢出标志。
 
-DS18B20 先调用 `DS18B20_StartConversion()` 并检查状态，在外部测量经过至少 750 ms 后调用 `DS18B20_ReadTemperature(elapsed_ms, &temperature_c)`。按 [Analog Devices DS18B20 数据手册](https://www.analog.com/media/en/technical-documentation/data-sheets/ds18b20.pdf)核对 9 字节 scratchpad/CRC。未校准的阻塞延时接口已移除；底层 1-Wire 时序仍须 Keil 目标构建和板端测量。
+DS18B20 先调用 `DS18B20_StartConversion()` 并检查状态，在外部测量经过至少 750 ms 后调用 `DS18B20_ReadTemperature(elapsed_ms, &temperature_c)`。按 [Analog Devices DS18B20 数据手册](https://www.analog.com/media/en/technical-documentation/data-sheets/ds18b20.pdf)核对 9 字节 scratchpad/CRC。1-Wire 槽位现在调用 `DS18B20_DelayUs(uint)`，板级集成方必须按实际 MCU 时钟提供并测量该微秒延时；当前仓库没有这个目标实现。主机测试仅核对延时请求序列，Keil 链接、实际槽位波形和板端可靠性均未验证。
 
 ## 主机逻辑测试
 

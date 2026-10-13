@@ -3,6 +3,10 @@
 
 #include <library.h>
 
+/* Platform integration must supply a measured microsecond delay for the
+ * actual MCU clock. Host stubs verify call order, not electrical timing. */
+void DS18B20_DelayUs(uint microseconds);
+
 bit DS18B20_StartConversion(void);
 bit DS18B20_ConversionReady(uint elapsed_ms);
 /* Call only after a successful start and at least 750 ms of externally
