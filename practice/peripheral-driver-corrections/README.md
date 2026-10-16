@@ -9,7 +9,7 @@
 | I²C / PCF8591 | [`iic_safe.c`](iic_safe.c)、[`peripheral_policy.c`](peripheral_policy.c) | 检查总线可用性和 ACK，丢弃前次转换字节，对当前字节发送 NACK；错误保持调用方输出不变 |
 | DS18B20 | [`ds18b20_safe.c`](ds18b20_safe.c)、[`peripheral_policy.c`](peripheral_policy.c) | 启动与读取分离；完整 9 字节 scratchpad CRC 校验；失败不伪装为 0℃ |
 | 独立按键 | [`key_task_safe.c`](key_task_safe.c) | 键值只在扫描到期后使用 |
-| DS1302 | [`rtc_startup.c`](rtc_startup.c) | 启动时检查时分秒和 CH 位 |
+| DS1302 | [`rtc_startup.c`](rtc_startup.c) | 启动时检查时分秒和 CH 位；只在默认时分秒也为有效 BCD 时写入 |
 | UART | [`uart_safe.c`](uart_safe.c) | RX 中断入队；TX 使用有界轮询预算，超时后保持在途状态 |
 
 ## 接口设计
