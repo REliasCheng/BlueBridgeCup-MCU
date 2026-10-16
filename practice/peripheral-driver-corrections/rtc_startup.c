@@ -20,6 +20,11 @@ bit RTC_InitIfInvalid(uchar default_hour, uchar default_minute, uchar default_se
     if(RTC_HasValidTime()) {
         return 0;
     }
+    if(!PeripheralPolicy_IsValidBcd(default_hour, 23) ||
+       !PeripheralPolicy_IsValidBcd(default_minute, 59) ||
+       !PeripheralPolicy_IsValidBcd(default_second, 59)) {
+        return 0;
+    }
     Set_Time(default_hour, default_minute, default_second);
     return 1;
 }
