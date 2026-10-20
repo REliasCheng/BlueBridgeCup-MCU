@@ -41,6 +41,7 @@ DS18B20 先调用 `DS18B20_StartConversion()` 并检查状态，在外部测量�
 
 - RTC 时、分、秒的 BCD 范围检查；
 - 按键扫描周期和值域检查；
+- 使用 Mock `Read_4Key()` 直接验证 `KeyTask_Update()` 仅在扫描到期时读取按键，且无效键不修改 LED 值；
 - DS18B20 750 ms 转换条件、合法 0℃、负温度、CRC 错误和输出保持；
 - UART 环形队列索引回绕。
 - UART 有界等待、超时、迟到完成和 RX/TX 并发状态。

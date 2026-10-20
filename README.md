@@ -71,7 +71,7 @@ assets/images/            自绘板级架构图
 
 ### 💻 Host Test
 
-主机测试覆盖 RTC BCD、按键条件、DS18B20 转换/CRC/温度解码、UART 队列及有界 TX 状态、PCF8591 事务顺序和失败路径。测试使用模拟寄存器/总线回调，不验证板端电气时序。
+主机测试覆盖 RTC BCD、按键条件与 `KeyTask_Update()` 扫描门控、DS18B20 转换/CRC/温度解码、UART 队列及有界 TX 状态、PCF8591 事务顺序和失败路径。测试使用模拟寄存器/总线回调，不验证板端电气时序。
 
 ### 🔨 Build Verification
 
