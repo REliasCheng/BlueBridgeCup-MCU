@@ -29,6 +29,11 @@ jobs:
           "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -I "$dir" \
             "$dir/peripheral_policy.c" "$dir/tests/test_peripheral_policy.c" -o /tmp/bluebridge-policy
           /tmp/bluebridge-policy
+          "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -DHOST_TEST \
+            -I "$dir/tests/stubs" -I "$dir" \
+            "$dir/key_task_safe.c" "$dir/peripheral_policy.c" \
+            "$dir/tests/test_key_task_safe.c" -o /tmp/bluebridge-key-task
+          /tmp/bluebridge-key-task
           "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -I "$dir" \
             "$dir/peripheral_policy.c" "$dir/tests/test_pcf8591_transaction.c" -o /tmp/bluebridge-pcf
           /tmp/bluebridge-pcf

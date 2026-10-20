@@ -8,6 +8,8 @@ typedef unsigned char bit;
 #define xdata
 #define _nop_() ((void)0)
 
+uchar Read_4Key(void);
+
 extern volatile uchar SCON;
 extern volatile uchar AUXR;
 extern volatile uchar TMOD;
