@@ -13,10 +13,11 @@
 | MCU / Board | CT107D V31/V40、IAP15F2K61S2；Keil 使用兼容器件配置 |
 | Shared Resources | P0 数据总线、P2 / 74HC138 / 74HC573 锁存选择 |
 | Timing & Interfaces | Timer2 周期节拍、UART、I²C、1-Wire、RTC |
-| Host Evidence | Portable policy and UART state tests use GCC/Clang in CI; no C51 target result |
-| Hardware Scope | Keil 目标构建与 CT107D 实机验证未执行 |
+| Host Evidence | Portable policy and UART state tests use GCC/Clang in CI |
+| SDCC Target Evidence | 原有 `peripheral_policy.c` 已链接到 IAP15 资源约束下的软件目标；HEX、内存和通用 C52 指令状态由独立 CI 校验 |
+| Hardware Scope | Keil 目标构建与 CT107D 实机验证未执行；SDCC 映像不代表板端外设已运行 |
 
-> ⏱️ **Evidence:** Peripheral policies host-tested · GCC build passed · Keil target and hardware validation not performed
+> ⏱️ **Evidence:** Peripheral policies host-tested · SDCC MCS-51 software target linked and HEX verified · Keil target and CT107D hardware validation not performed
 
 ## 📌 Overview
 
@@ -55,6 +56,8 @@ practice/peripheral-driver-corrections/
   peripheral_policy.*     可移植策略与主机测试
   tests/                  GCC/Clang 主机边界测试
 .github/workflows/host-tests.yml  PR 与 main 的主机 CI
+target/sdcc/             原创 IAP15 软件目标入口与只读 SFR 适配
+scripts/                 SDCC 构建和通用 C52 指令仿真核验
 docs/                     CT107D、竞赛结构与调试记录
 assets/images/            自绘板级架构图
 ```
@@ -66,6 +69,7 @@ assets/images/            自绘板级架构图
 - [从模块到综合程序](docs/蓝桥杯竞赛体系.md)
 - [实践路线](docs/学习路线.md)
 - [外设驱动实践](practice/peripheral-driver-corrections/README.md)
+- [SDCC 目标构建与验证边界](docs/sdcc-target-build.md)
 
 ## 🧪 Verification
 
@@ -75,15 +79,15 @@ assets/images/            自绘板级架构图
 
 ### 🔨 Build Verification
 
-可移植策略层和 UART Host shim 已使用 GCC 与严格警告选项完成本地构建；PR 的 GCC/Clang CI 结果需按实际运行 SHA 核验。Keil C51 Target Build 尚未执行。
+可移植策略层和 UART Host shim 使用 GCC/Clang Host CI；原有策略已由 SDCC MCS-51 真实编译、链接，HEX 与资源约束由[目标构建脚本](docs/sdcc-target-build.md)检查。PR/main CI 结果需按实际运行 SHA 核验。Keil C51 Target Build 尚未执行。
 
 ### 🔌 Hardware Validation
 
-**Status:** Not Performed. 当前公开验证不包含 Keil 目标构建、板端下载、逻辑分析仪波形或传感器实测。
+**Status:** Not Performed. 当前公开验证不包含 CT107D 板端下载、逻辑分析仪波形或传感器实测。
 
 ### 📊 Runtime Evidence
 
-现有运行证据仅限主机测试，不代表 CT107D 实机运行结果；硬件相关内容仍需实机复测。
+现有运行证据包括主机测试与通用 C52 模拟器中的目标指令和诊断 XRAM；二者都不代表 CT107D 实机运行结果。硬件相关内容仍需实机复测。
 
 ## License Boundary
 
