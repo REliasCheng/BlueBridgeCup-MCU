@@ -57,3 +57,40 @@ jobs:
           /tmp/bluebridge-rtc
         env:
           CC: ${{ matrix.compiler }}
+
+  sdcc-target:
+    name: SDCC MCS-51 compile/link/HEX and C52 software state
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Install distribution SDCC and uCsim
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq sdcc sdcc-ucsim
+          sdcc -v
+      - name: Build twice, inspect linked software state and compare HEX
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build_sdcc_target.py --output "$RUNNER_TEMP/bluebridge-first"
+          python3 scripts/build_sdcc_target.py --output "$RUNNER_TEMP/bluebridge-second"
+          cmp "$RUNNER_TEMP/bluebridge-first/bluebridge_iap15_policy.hex" \
+              "$RUNNER_TEMP/bluebridge-second/bluebridge_iap15_policy.hex"
+          python3 scripts/run_sdcc_simulator.py --build "$RUNNER_TEMP/bluebridge-first"
+          sha256sum "$RUNNER_TEMP/bluebridge-first/bluebridge_iap15_policy.hex"
+      - name: Preserve target verification logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: bluebridge-sdcc-verification
+          path: |
+            ${{ runner.temp }}/bluebridge-first/build.log
+            ${{ runner.temp }}/bluebridge-first/build-report.json
+            ${{ runner.temp }}/bluebridge-first/simulator.log
+            ${{ runner.temp }}/bluebridge-first/simulator-report.json
+            ${{ runner.temp }}/bluebridge-second/build.log
+            ${{ runner.temp }}/bluebridge-second/build-report.json
+          if-no-files-found: error
