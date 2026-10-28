@@ -2,6 +2,10 @@
 #include "iap15_registers.h"
 #include "peripheral_policy.h"
 
+#ifndef CT107D_ON_CHIP_EMULATION
+#error CT107D_ON_CHIP_EMULATION must be provided by the target build
+#endif
+
 __xdata volatile struct Ct107dDiagnostics ct107d_diagnostics;
 __code const unsigned char ct107d_abi_sizes[3] = {
     sizeof(struct Ct107dDiagnostics), sizeof(void *), sizeof(void (*)(void))
@@ -23,10 +27,14 @@ void Ct107d_ProcessSyntheticKey(unsigned char scan_due, unsigned char key)
 void Ct107d_CheckPinConflict(unsigned char wants_uart1_on_p30_p31)
 {
     /* STC's on-chip emulation reserves these pins. No UART is configured. */
+#if CT107D_ON_CHIP_EMULATION
     if (wants_uart1_on_p30_p31) {
         ct107d_diagnostics.resource_conflict = 1U;
         ct107d_diagnostics.error_latch |= 0x02U;
     }
+#else
+    (void)wants_uart1_on_p30_p31;
+#endif
 }
 
 void Iap15_CaptureReadOnlyPorts(void)

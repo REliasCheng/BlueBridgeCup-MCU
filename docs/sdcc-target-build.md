@@ -40,7 +40,8 @@ The software resource enum names LED `0x80`, buzzer/relay `0xA0`, digit
 select `0xC0` and segment select `0xE0` as documented in this repository's
 CT107D analysis. No function uses these values to write P2. A synthetic
 request for UART1 on P3.0/P3.1 in emulation mode records a conflict; no UART
-is initialized.
+is initialized. The standalone compilation profile disables that emulation
+conflict rule; it still does not configure or verify a real UART.
 
 ## Reproduce
 

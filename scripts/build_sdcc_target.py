@@ -143,7 +143,9 @@ def main() -> None:
         for source in SOURCES:
             obj = output / (source.stem + ".rel")
             run([str(sdcc), "-mmcs51", "--std-c11", "--model-small", "--stack-auto",
-                 "--Werror", "-Ipractice/peripheral-driver-corrections", "-Itarget/sdcc",
+                 "--Werror", "-DCT107D_ON_CHIP_EMULATION=" +
+                 ("1" if args.profile == "on-chip-emulation" else "0"),
+                 "-Ipractice/peripheral-driver-corrections", "-Itarget/sdcc",
                  "-c", str(source), "-o", str(obj)], log)
             objects.append(str(obj))
         ihx = output / (IMAGE + ".ihx")
