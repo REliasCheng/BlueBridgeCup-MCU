@@ -47,6 +47,11 @@ jobs:
             "$dir/iic_safe.c" "$dir/ds18b20_safe.c"
           "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -DHOST_TEST \
             -I "$dir/tests/stubs" -I "$dir" \
+            "$dir/iic_safe.c" "$dir/peripheral_policy.c" \
+            "$dir/tests/test_iic_host_nack.c" -o /tmp/bluebridge-iic-host
+          /tmp/bluebridge-iic-host
+          "$CC" -std=c11 -Wall -Wextra -Werror -pedantic -DHOST_TEST \
+            -I "$dir/tests/stubs" -I "$dir" \
             "$dir/peripheral_policy.c" "$dir/tests/test_ds18b20_timing.c" \
             -o /tmp/bluebridge-ds18b20
           /tmp/bluebridge-ds18b20
